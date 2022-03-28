@@ -7,11 +7,11 @@ class MlbsSpider(scrapy.Spider):
 
 
     def parse(self, response, **kwargs):
-        for i in response.xpath("//div[@class='andes-card andes-card--flat andes-card--default ui-search-result ui-search-result--core andes-card--padding-default']"):
-            price = i.xpath('.//div[@class="ui-search-price__second-line"]//span//text()').getall()
-            price = price[1:5]
+        for i in response.xpath("//ol[@class='ui-search-layout ui-search-layout--grid']"):
+            price = i.xpath('.//div[@class="ui-search-price__second-line"]//span/text()').getall()
+            price = price[1:3]
             price = ''.join(price)
-            title = i.xpath(".//h2[@class='ui-search-item__title']//text()").get()
+            title = i.xpath(".//h2[@class='ui-search-item__title ui-search-item__group__element']//text()").get()
             link = i.xpath('.//div[@class="ui-search-result__image"]/a/@href').getall()
 
             yield {
