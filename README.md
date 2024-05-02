@@ -23,7 +23,7 @@ MLB takes for you some of these results:
 
 The standard flow goes like this:
  
-1. Goes to the MLBSearch directory by following the command `cd MLBSEarch`, after that MLB will take the params that you send on the command line `scrapy runspider -o <name-of-json-file>.json -a s=<what-you-want-to-search> spiders/mlbs.py`
+1. Goes to the MLBSearch directory by following the command `cd MLBSEarch`, after that MLB will take the params that you send on the command line `python3 -m scrapy runspider -o <name-of-json-file>.json -a s=<what-you-want-to-search> MLBSearch/spiders/mlbs.py`
 Note that in 's=' you should put full names with '-': 'samsung-galaxy-s20' like this.
 
 2. With this parameters, the spider will open a formated link that contains the product that you want to search and take all of products that you want.

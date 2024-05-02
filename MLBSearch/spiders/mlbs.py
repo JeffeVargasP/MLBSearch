@@ -5,22 +5,18 @@ class MlbsSpider(scrapy.Spider):
     def start_requests(self):
         yield scrapy.Request(f'https://lista.mercadolivre.com.br/{self.s}')
 
-
     def parse(self, response, **kwargs):
         for i in response.xpath('/html/body/main/div/div[3]/section/ol'):
-            price = i.xpath('.//div[@class="ui-search-price__second-line"]/span[@class="andes-money-amount ui-search-price__part ui-search-price__part--medium andes-money-amount--cents-superscript"]').getall()
-            price = price[1:3]
-            price = ''.join(price)
-            title = i.xpath(".//h2[@class='ui-search-item__title']//text()").get()
+            title = i.xpath('.//div[@class="ui-search-item__group ui-search-item__group--title"]/a/h2/text()').getall()
+            price = i.xpath('//*/div[2]/div[2]/div[1]/div[1]/div/div/div/span[1]/span[2]/text()').getall()
             link = i.xpath('.//div[@class="ui-search-item__group ui-search-item__group--title"]/a/@href').getall()
 
-            yield {
-
-                'título': title,
-                'preço': price,
-                'link': link
-
-            }
+            for t, p, l in zip(title, price, link):
+                yield {
+                    'title': t,
+                    'price': f'R$ {p}',
+                    'link': l
+                }
 
         next_page1 = response.xpath('//a[contains(@title,"Próxima")]/@href').get()
         next_page2 = response.xpath("//a[contains(@title, 'Seguinte')]/@href").get()
